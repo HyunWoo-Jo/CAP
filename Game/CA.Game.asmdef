@@ -1,0 +1,16 @@
+{
+    "name": "CA.Game",
+    "rootNamespace": "CA.Game",
+    "references": [
+        "GUID:d4133914f68f1774ab03d60f9532d1b9"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
