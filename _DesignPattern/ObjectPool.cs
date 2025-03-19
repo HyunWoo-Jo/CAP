@@ -1,8 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-namespace N.DesignPattern
-{
+namespace CA.DesignPattern {
     public interface IObjectPool {
         void RepayItem(GameObject item, int index);
 

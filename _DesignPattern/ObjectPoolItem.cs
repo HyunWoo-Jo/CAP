@@ -1,8 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace N.DesignPattern
-{
+namespace CA.DesignPattern { 
     public class ObjectPoolItem : MonoBehaviour
     {
         private IObjectPool _owner;

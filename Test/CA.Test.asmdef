@@ -1,11 +1,10 @@
 {
-    "name": "CA.UI",
-    "rootNamespace": "CA.UI",
-    "references": [
-        "GUID:e2f3680e28f9b44489893672b35e7a7a",
-        "GUID:d4133914f68f1774ab03d60f9532d1b9"
+    "name": "CA.Test",
+    "rootNamespace": "CA.Test",
+    "references": [],
+    "includePlatforms": [
+        "Editor"
     ],
-    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

@@ -1,6 +1,6 @@
 {
-    "name": "N.DesignPattern",
-    "rootNamespace": "N.DesignPattern",
+    "name": "CA.DesignPattern",
+    "rootNamespace": "CA.DesignPattern",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
