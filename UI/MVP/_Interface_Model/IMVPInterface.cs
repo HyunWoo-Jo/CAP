@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace N.UI
+namespace CA.UI
 {
     public interface IModel_UI {}
     public interface IView_UI {

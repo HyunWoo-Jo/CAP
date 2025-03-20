@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 #if UNITY_EDITOR
 [assembly: InternalsVisibleTo("CA.Test")]
 #endif
-namespace N.UI {
+namespace CA.UI {
 
     public class AttackPresenter_UI : Presenter_UI<AttackModel_UI, IAttackView_UI> {
         // Your logic here

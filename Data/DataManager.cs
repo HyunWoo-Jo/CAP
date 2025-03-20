@@ -6,7 +6,7 @@ using UnityEngine.AddressableAssets;
 using Cysharp.Threading.Tasks;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Linq;
-namespace N.Data
+namespace CA.Data
 {
     public class DataManager : Singleton<DataManager> 
     {

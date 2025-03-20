@@ -2,8 +2,6 @@ using UnityEngine;
 using CA.DesignPattern;
 using CA.Data;
 using System.Collections.Generic;
-using N.Data;
-using N.UI;
 namespace CA.UI
 {
     public class UIManager : Singleton<UIManager> {

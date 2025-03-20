@@ -3,7 +3,10 @@
     "rootNamespace": "CA.UI",
     "references": [
         "GUID:e2f3680e28f9b44489893672b35e7a7a",
-        "GUID:d4133914f68f1774ab03d60f9532d1b9"
+        "GUID:d4133914f68f1774ab03d60f9532d1b9",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:3b4d1560b41d43b41a7146d59c43e9a9",
+        "GUID:7a83bb0a117ffe640ae8fa3c28a68647"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

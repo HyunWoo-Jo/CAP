@@ -1,66 +1,99 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using static UnityEditor.ObjectChangeEventStream;
 namespace CA.DesignPattern {
     public interface IObjectPool {
         void RepayItem(GameObject item, int index);
 
     }
-    public class ObjectPool<T> : IObjectPool where T : MonoBehaviour
-    {
-        private GameObject _ownerObj;
-        private GameObject _itemObj;
-        private Queue<T> _item_que;
-        private List<T> index_T_list;
-        int index = 0;
-
-        private ObjectPool() {
+    public static class ObjectPoolExtensions { 
+        // Builder 확장 매서드
+        public static ObjectPoolBuilder<T> DontDestroy<T>(this ObjectPoolBuilder<T> builder) where T : MonoBehaviour {
+            GameObject.DontDestroyOnLoad(builder.pool.ownerObj);
+            builder.pool.isDontDestroy = true;
+            return builder;
+        }
+        public static ObjectPoolBuilder<T> Static<T>(this ObjectPoolBuilder<T> builder) where T : MonoBehaviour {
+            builder.pool.isStatic = true;
+            return builder;
         }
 
-        public void Dipose() {
-            _ownerObj = null;
-            _itemObj = null;
-            while (_item_que.Count > 0) {
-                T item = _item_que.Dequeue();
-                GameObject.Destroy(item.gameObject);
-            }
+        public static ObjectPool<T> Build<T>(this ObjectPoolBuilder<T> builder) where T : MonoBehaviour {
+            return builder.pool;
         }
-        public static ObjectPool<T> Instance(GameObject itemObj, int capacity = 10) {
+
+    }
+    public class ObjectPoolBuilder<T> where T : MonoBehaviour {
+        internal ObjectPool<T> pool;
+        public static ObjectPoolBuilder<T> Instance(GameObject itemObj, int capacity = 10) {
             GameObject parentObj = new() {
                 isStatic = true,
                 name = itemObj.name + "_objectPool"
             };
-            ObjectPool<T> pool = new ObjectPool<T>();
-            pool._ownerObj = parentObj;
-            pool._itemObj = itemObj;
-            pool._item_que = new Queue<T>();
-            pool.index_T_list = new List<T>();
-            Enumerable.Range(0, capacity).ToList().ForEach(_ => pool.CreateItem());
-            return pool;
+            ObjectPoolBuilder<T> builder = new ObjectPoolBuilder<T>();
+
+            builder.pool = new ObjectPool<T>();
+            builder.pool.ownerObj = parentObj;
+            builder.pool.itemObj = itemObj;
+            builder.pool.item_que = new Queue<T>();
+            builder.pool.index_T_list = new List<T>();
+            Enumerable.Range(0, capacity).ToList().ForEach(_ => builder.pool.CreateItem());         
+            return builder;
+        }
+    }
+
+    public class ObjectPool<T> : IObjectPool where T : MonoBehaviour
+    {
+        internal GameObject ownerObj;
+        internal GameObject itemObj;
+        internal Queue<T> item_que;
+        internal List<T> index_T_list;
+        public bool isStatic;
+        internal bool isDontDestroy;
+
+        private int index = 0;
+        
+        // Builder를 통해 생성
+        internal ObjectPool() {
         }
 
-        private void CreateItem() {
-            GameObject obj = GameObject.Instantiate(_itemObj);
+        public void Dipose() {
+           
+            itemObj = null;
+            while (item_que.Count > 0) {
+                T item = item_que.Dequeue();
+                GameObject.DestroyImmediate(item.gameObject);
+            }
+            GameObject.DestroyImmediate(ownerObj);
+            ownerObj = null;
+        }
+
+        internal void CreateItem() {
+            GameObject obj = GameObject.Instantiate(itemObj);
             T t = obj.GetComponent<T>();
             obj.AddComponent<ObjectPoolItem>().Init(this, index++);
-            _item_que.Enqueue(t);
+            item_que.Enqueue(t);
             index_T_list.Add(t);
             obj.SetActive(false);
-            obj.transform.SetParent(_ownerObj.transform);
+            obj.transform.SetParent(ownerObj.transform);
+            obj.isStatic = this.isStatic;
         }
 
         public T BorrowItem() {
             
-            if (_item_que.Count <= 0) {
+            if (item_que.Count <= 0) {
                 CreateItem();   
             }
-            return _item_que.Dequeue();
+            return item_que.Dequeue();
         }
 
         public void RepayItem(GameObject item, int index) {
-            item.gameObject.transform.SetParent(_ownerObj.transform);
-            item.gameObject.SetActive(false);
-            _item_que.Enqueue(index_T_list[index]);
+            if (!isStatic) {
+                item.gameObject.transform.SetParent(ownerObj.transform);
+                item.gameObject.SetActive(false);
+            }
+            item_que.Enqueue(index_T_list[index]);
         }
 
     }

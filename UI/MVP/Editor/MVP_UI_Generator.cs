@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 using UnityEditor.VersionControl;
-namespace N.UI {
+namespace CA.UI {
     /// <summary>
     /// MVP UI 자동 생성 코드
     /// </summary>
@@ -38,7 +38,7 @@ using UnityEngine;
 using System.Runtime.CompilerServices;
 ////////////////////////////////////////////////////////////////////////////////////
 // Auto Generated Code
-namespace N.UI {{
+namespace CA.UI {{
     public class {_mvpName}Model_UI : Model_UI {{
         // Your logic here
         #region internal
@@ -56,10 +56,14 @@ using System.Runtime.CompilerServices;
 #if UNITY_EDITOR
 [assembly: InternalsVisibleTo(""CA.Test"")]
 #endif
-namespace N.UI {{
+namespace CA.UI {{
 
     public class {_mvpName}Presenter_UI : Presenter_UI<{_mvpName}Model_UI, I{_mvpName}View_UI> {{
         // Your logic here
+        #region private
+
+        #endregion
+
         #region internal
 
         #endregion
@@ -74,7 +78,7 @@ using System.Runtime.CompilerServices;
 #if UNITY_EDITOR
 [assembly: InternalsVisibleTo(""CA.Test"")]
 #endif
-namespace N.UI
+namespace CA.UI
 {{
     public interface I{_mvpName}View_UI : IView_UI {{
         // Your logic here

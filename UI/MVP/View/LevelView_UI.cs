@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 #if UNITY_EDITOR
 [assembly: InternalsVisibleTo("CA.Test")]
 #endif
-namespace N.UI
+namespace CA.UI
 {
     public interface ILevelView_UI : IView_UI {
         // Your logic here

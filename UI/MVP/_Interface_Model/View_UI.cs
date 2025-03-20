@@ -2,7 +2,7 @@ using CA.UI;
 using System;
 using UnityEngine;
 
-namespace N.UI
+namespace CA.UI
 {
     public abstract class View_UI<Presenter, Model> : MonoBehaviour, IView_UI where Presenter : IPresenter_UI, new() where Model : IModel_UI
     {

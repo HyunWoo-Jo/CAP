@@ -7,8 +7,7 @@ using UnityEngine.Assertions;
 #if UNITY_EDITOR
 [assembly: InternalsVisibleTo("CA.Test")]
 #endif
-namespace N.UI
-{
+namespace CA.UI {
     public interface IControllerView_UI : IView_UI {
         // Your logic here
         internal void UpdatePositionControllerCenterImage(Vector2 localPosition);

@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 #if UNITY_EDITOR
 [assembly: InternalsVisibleTo("CA.Test")]
 #endif
-namespace N.UI {
+namespace CA.UI {
 
     public class PauseButtonPresenter_UI : Presenter_UI<PauseButtonModel_UI, IPauseButtonView_UI> {
         // Your logic here

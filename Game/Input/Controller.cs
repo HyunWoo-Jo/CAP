@@ -1,9 +1,8 @@
 using CA.UI;
 using CA.Utills;
-using N.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
+
 namespace CA.Game
 {
     public class Controller : MonoBehaviour

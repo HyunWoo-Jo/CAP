@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace N.UI
+namespace CA.UI
 {
     public abstract class Presenter_UI<Model, View> : IPresenter_UI where Model : IModel_UI, new() where View : IView_UI
     {
