@@ -16,6 +16,7 @@ namespace CA.UI {
 
         #region internal
         internal void UpdateUI(float progress) {
+            if (_model.startTime == 0) _model.startTime = Time.time; // 초기화
             float elapsedTime = Time.time - _model.startTime; // 경과 시간
 
             if (elapsedTime < LoadingSceneModel_UI.minLoadTime) {

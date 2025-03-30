@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Runtime.CompilerServices;
 using UnityEngine.EventSystems;
 using CA.Utills;
+using CA.Data;
 ////////////////////////////////////////////////////////////////////////////////////
 // Auto Generated Code
 #if UNITY_EDITOR
@@ -44,7 +45,16 @@ namespace CA.UI {
         #endregion
         #region internal
         internal void WorldPanelInit(EventTrigger playButton) {
-
+            // Play 버튼 초기화
+            playButton.AddEventButton(EventTriggerType.PointerDown, () => {
+                // Scene 이동 Main -> Play Scene
+                SceneData.preScene = SceneData.SceneName.MainLobbyScene;
+                SceneData.nextScene = SceneData.SceneName.PlayScene;
+                // Loading Scene으로 이동
+                SceneLoader.Instance.LoadAsync(SceneData.SceneName.LoadScene, false, 0.5f);
+                // 버튼 기능 삭제
+                playButton.Clear();
+            }, this.GetType().Name, nameof(WorldPanelInit));
         }
 
         internal void WorldButtonInit(EventTrigger worldButton) {

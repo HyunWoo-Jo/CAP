@@ -18,8 +18,13 @@ namespace CA.Utills
             EventTrigger.Entry entry = new();
             entry.eventID = type;
             entry.callback.AddListener((e) => { action(); });
-#if UNITY_EDITOR
             AddEventButton(eventTigger, entry, className, methodName);
+        }
+
+        public static void Clear(this EventTrigger eventTigger) {
+            eventTigger.triggers.Clear();
+#if UNITY_EDITOR
+            eventTigger.GetComponent<EditorButtonEntryPointChker>().Dispose();
 #endif
         }
     }

@@ -8,6 +8,9 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Linq;
 namespace CA.Data
 {
+    /// <summary>
+    /// Addressable 컨트롤 클레스
+    /// </summary>
     public class DataManager : Singleton<DataManager> 
     {
         private Dictionary<string, object> _data_dic = new();

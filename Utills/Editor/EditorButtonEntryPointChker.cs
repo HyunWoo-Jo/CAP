@@ -10,7 +10,7 @@ namespace CA.Utills {
     /// </summary>
     public class EditorButtonEntryPointChker : MonoBehaviour
     {
-        [ReadOnlyAttribute][SerializeField] private List<EntryPointName> _entryPointName_list = new();
+        [ReadOnly][SerializeField] private List<EntryPointName> _entryPointName_list = new();
 
         [Serializable]
         public struct EntryPointName {
@@ -22,6 +22,10 @@ namespace CA.Utills {
         public void AddEntry(string className, string methodName, EventTriggerType type) {
 
             _entryPointName_list.Add(new EntryPointName{triggerType = type, className = className, methodName = methodName });
+        }
+
+        public void Dispose() {
+            Destroy(this);
         }
 
     }

@@ -22,12 +22,16 @@ namespace CA.Game
 
 
         private void Update() {
+            if (Settings.isPause) return; // 정지 상태 일 경우 리턴
+
+            // Animation 처리
             WorkAnimation();
-            // vector2 to vector3
-            Vector3 dir = _controller.InputDir.normalized;
+
+            // 이동 처리
+            // vector2 to vector3  // Vector3(inputDir.x, 0, inputDir.y);
+            Vector3 dir = _controller.InputDir.normalized; // controller의  입력정보 
             dir.z = dir.y;
             dir.y = 0;
-
             WorkMove(dir);
         }
 

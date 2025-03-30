@@ -4,6 +4,9 @@ using CA.Data;
 using System.Collections.Generic;
 namespace CA.UI
 {
+    /// <summary>
+    /// UI 생성 및 관리 하는 클레스
+    /// </summary>
     public class UIManager : Singleton<UIManager> {
         private Canvas _mainCanvas; // 메인 켄버스
         private Dictionary<string, string> _key_dic = new(); // ui의 Addressable Key가 저장 되있는 

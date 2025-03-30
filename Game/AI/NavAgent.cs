@@ -32,7 +32,10 @@ namespace CA.Game
                 _navAgent.updatePosition = true;
             }
         }
-
+        /// <summary>
+        /// Nav 정보를 따라 방향으로 이동
+        /// </summary>
+        /// <param name="direction"></param>
         public void MoveDirection(Vector3 direction) {
             if(!_naveType.Equals(NavType.Direction)) InitNavType(NavType.Direction);
 

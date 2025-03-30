@@ -41,6 +41,9 @@ namespace CA.UI
         public void UpdateProgress(float progress) {
             _presenter.UpdateUI(progress);
         }
+        public float GetProgress() {
+            return _loadFillImage.fillAmount;
+        }
 
         #endregion
 

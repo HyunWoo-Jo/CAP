@@ -7,7 +7,7 @@ namespace CA.UI {
     public class LoadingSceneModel_UI : Model_UI {
         // Your logic here
         #region internal
-        internal float startTime;
+        internal float startTime = 0;
         internal const float minLoadTime = 2f; // 최소 로딩 시간
 
         internal bool fakeLoading = false; // 가짜 로딩
