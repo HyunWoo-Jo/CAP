@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine.EventSystems;
 using CA.Utills;
 using CA.Data;
+using UnityEngine.SceneManagement;
 ////////////////////////////////////////////////////////////////////////////////////
 // Auto Generated Code
 #if UNITY_EDITOR
@@ -52,6 +53,10 @@ namespace CA.UI {
                 SceneData.nextScene = SceneData.SceneName.PlayScene;
                 // Loading Scene으로 이동
                 SceneLoader.Instance.LoadAsync(SceneData.SceneName.LoadScene, false, 0.5f);
+
+                // Effect
+                var wipeUI = UIManager.Instance.InstantiateUI<WipeUI>(100); // 최상단의 생성
+                wipeUI.Wipe(WipeUI.Direction.Left, 0.5f, false); // Left 방향으로 Effect 생성
                 // 버튼 기능 삭제
                 playButton.Clear();
             }, this.GetType().Name, nameof(WorldPanelInit));

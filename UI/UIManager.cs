@@ -101,7 +101,7 @@ namespace CA.UI
 
         // UI Key µî·Ï
         private void AddKey() {
-            //_key_dic.Add(nameof(LevelView_UI),"");
+            _key_dic.Add(nameof(WipeUI), "Wipe_UI.prefab");
 
         }
     }

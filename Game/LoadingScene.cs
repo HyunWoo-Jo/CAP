@@ -6,7 +6,7 @@ using CA.DesignPattern;
 using UnityEngine.SceneManagement;
 namespace CA.Game
 {
-    public class LoadingScean : MonoBehaviour
+    public class LoadingScene : MonoBehaviour
     {
         [SerializeField] private LoadingSceneView_UI _view;
         public void Awake() {
