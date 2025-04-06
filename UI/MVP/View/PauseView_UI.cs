@@ -1,6 +1,8 @@
 
 using UnityEngine;
 using System.Runtime.CompilerServices;
+using UnityEngine.EventSystems;
+using UnityEngine.Assertions;
 ////////////////////////////////////////////////////////////////////////////////////
 // Auto Generated Code
 #if UNITY_EDITOR
@@ -21,7 +23,17 @@ namespace CA.UI
         
         // Your logic here
         #region private
-        
+        [SerializeField] private EventTrigger _giveUpButton;
+        [SerializeField] private EventTrigger _retryButton;
+        [SerializeField] private EventTrigger _exitButton;
+        private void Awake() {
+#if UNITY_EDITOR
+            Assert.IsNotNull(_giveUpButton);
+            Assert.IsNotNull(_retryButton);
+            Assert.IsNotNull(_exitButton);
+#endif
+            _presenter.InitButton(_giveUpButton, _retryButton, _exitButton);
+        }
         #endregion        
 
         #region public

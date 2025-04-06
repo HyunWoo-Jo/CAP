@@ -15,5 +15,6 @@ namespace CA.Data
 
         public static SceneName preScene; // ¿Ã¿¸ æ¿
         public static SceneName nextScene; // ¥Ÿ¿Ω æ¿
+        public static bool isLoading = false;
     }
 }

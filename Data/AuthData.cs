@@ -3,23 +3,26 @@ using System.Security.Cryptography;
 using System.Text;
 using System;
 using UnityEditor;
-namespace CA.Network
+namespace CA.Data
 {
-    [CreateAssetMenu(fileName = "FirebaseAuthData", menuName = "Scriptable Objects/FirebaseAuthData")]
-    public class FirebaseAuthData : ScriptableObject
+    /// <summary>
+    /// Firebase Auth 정보를 저장하는 클레스
+    /// </summary>
+    [CreateAssetMenu(fileName = "AuthData", menuName = "Scriptable Objects/AuthData")]
+    public class AuthData : ScriptableObject
     {
         [SerializeField] private string _uid;
         [SerializeField] private string _email;
         [SerializeField] private string _password;
-        
 
-        internal string Email { get { return _email; } set { _email = value; } }
-        internal string Uid {  get { return _uid; } set { _uid = value; } }
+
+        public string Email { get { return _email; } set { _email = value; } }
+        public string Uid {  get { return _uid; } set { _uid = value; } }
 
         /// <summary>
         /// sha256 password
         /// </summary>
-        internal string Password {
+        public string Password {
             get { return _password; }
             set {
                 SHA256 sha256 = SHA256.Create();
@@ -28,13 +31,13 @@ namespace CA.Network
                 _password = BitConverter.ToString(hash).Replace("-","").ToLower();
             }
         }
-        internal void SaveAuthData() {
+        public void SaveAuthData() {
             PlayerPrefs.SetString("uid", _uid);
             PlayerPrefs.SetString("email", _email);
             PlayerPrefs.SetString("password", _password);
         }
 
-        internal void LoadAuthData() {
+        public void LoadAuthData() {
             if (PlayerPrefs.HasKey("uid")) {
                 _uid = PlayerPrefs.GetString("uid");
                 _email = PlayerPrefs.GetString("email");

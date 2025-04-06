@@ -24,12 +24,20 @@ namespace CA.UI
         // Your logic here
         #region private
         [SerializeField] private EventTrigger _pauseButton;
+
         private void Awake() {
 #if UNITY_EDITOR
             Assert.IsNotNull(_pauseButton);
 #endif
+
+            // 버튼 초기화
+            _presenter.InitButton(_pauseButton);
+
+           
         }
-        #endregion        
+
+
+        #endregion
 
         #region public
 

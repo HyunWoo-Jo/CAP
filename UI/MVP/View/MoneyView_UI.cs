@@ -10,16 +10,15 @@ using UnityEngine.Assertions;
 #endif
 namespace CA.UI
 {
-    public interface IGoldView_UI : IView_UI {
+    public interface IMoneyView_UI : IView_UI {
         // Your logic here
 
         internal void UpdateUI(string goldText);
     }
 
-    public class GoldView_UI : View_UI<GoldPresenter_UI,GoldModel_UI> ,IGoldView_UI
-    {
+    public class MoneyView_UI : View_UI<MoneyPresenter_UI, MoneyModel_UI> , IMoneyView_UI {
         protected override void CreatePresenter() {
-            _presenter = new GoldPresenter_UI();
+            _presenter = new MoneyPresenter_UI();
             _presenter.Init(this);  
         }
 
@@ -27,24 +26,24 @@ namespace CA.UI
 
         // Your logic here
         #region private
-        [SerializeField] private TextMeshProUGUI _goldText;
+        [SerializeField] private TextMeshProUGUI _moneyText;
 
         private void Awake() {
 #if UNITY_EDITOR
-            Assert.IsNotNull(_goldText);
+            Assert.IsNotNull(_moneyText);
 #endif
         }
         #endregion
 
         #region public
-        public void SetGold(int gold) {
-
+        public void SetMoney(long money) {
+            _presenter.SetMoney(money);
         }
         #endregion
 
         #region internal
-        void IGoldView_UI.UpdateUI(string goldText) {
-            
+        void IMoneyView_UI.UpdateUI(string moneyText) {
+            _moneyText.text = moneyText;
         }
         #endregion
     }

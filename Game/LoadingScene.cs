@@ -16,10 +16,10 @@ namespace CA.Game
             if (SceneData.nextScene == SceneData.SceneName.None) {
                 SceneData.nextScene = SceneData.SceneName.PlayScene; 
             }
-
 #endif
         }
         private void Start() {
+            SceneData.isLoading = true;
             SceneLoader.Instance.LoadAsync(SceneData.nextScene, false);
         }
 

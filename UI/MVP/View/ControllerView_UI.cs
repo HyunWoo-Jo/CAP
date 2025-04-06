@@ -30,6 +30,7 @@ namespace CA.UI {
 #endif
             AddUIManager();
         }
+        
         #endregion        
 
         #region public

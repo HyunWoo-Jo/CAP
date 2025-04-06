@@ -62,6 +62,13 @@ namespace CA.UI
         public void AddUIDic(string className,GameObject obj) {
             _view_dic.Add(className, obj);
         }
+        /// <summary>
+        /// Dic에 UI 삭제
+        /// </summary>
+        /// <param name="className"></param>
+        public void RemoveUIDic(string className) {
+            _view_dic.Remove(className);
+        }
 
         public GameObject GetUIObject<View>(){
             if (_view_dic.TryGetValue(typeof(View).Name, out var obj)) return obj;
@@ -102,7 +109,7 @@ namespace CA.UI
         // UI Key 등록
         private void AddKey() {
             _key_dic.Add(nameof(WipeUI), "Wipe_UI.prefab");
-
+            _key_dic.Add(nameof(PauseView_UI), "Pause_UI.prefab");
         }
     }
 }

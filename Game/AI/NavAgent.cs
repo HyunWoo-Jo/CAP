@@ -4,7 +4,7 @@ using UnityEngine.AI;
 using CA.Utills;
 namespace CA.Game
 {
-    public class NavAgent : MonoBehaviour {
+    public class NavAgent : MonoBehaviour, IMover {
         public enum NavType {
             None,
             Raycast,

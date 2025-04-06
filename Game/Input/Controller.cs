@@ -2,6 +2,7 @@ using CA.Data;
 using CA.UI;
 using CA.Utills;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
 namespace CA.Game
@@ -11,7 +12,7 @@ namespace CA.Game
     /// </summary>
     public class Controller : MonoBehaviour
     {
-        [ReadOnly] private ControllerView_UI _controllerView; // UI
+        [SerializeField] private ControllerView_UI _controllerView; // UI
 
         [ReadOnly] private Vector2 _inputDir = Vector3.zero; // 입력값
         [ReadOnly] private Vector2 _firstClickPoint = Vector2.zero; // 처음 입력 위치
@@ -19,10 +20,10 @@ namespace CA.Game
         private float _clampLength = 100f;
         internal Vector2 InputDir {  get { return _inputDir; } }
 
-        public void Start() {
-            // UI 가지고 오기
-            var cntlObj = UIManager.Instance.GetUIObject<ControllerView_UI>();
-            _controllerView = cntlObj.GetComponent<ControllerView_UI>();
+        private void Awake() {
+#if UNITY_EDITOR
+            Assert.IsNotNull(_controllerView);
+#endif
         }
         private void Update() {
             if (Settings.isPause) return; // 정지 상태일 경우 리턴
@@ -35,6 +36,13 @@ namespace CA.Game
         /// Input 처리
         /// </summary>
         private void WorkInput() {
+#if UNITY_EDITOR
+            // Test 용 코드
+            float screenMagnification = 70f;
+            _inputDir.x = Input.GetAxisRaw("Horizontal") * screenMagnification;
+            _inputDir.y = Input.GetAxisRaw("Vertical") * screenMagnification;
+#endif
+
             if (Input.GetMouseButtonDown(0)) {
                 
                 if (EventSystem.current != null &&
@@ -53,6 +61,7 @@ namespace CA.Game
                 _inputDir = Vector2.zero;
                 _isInput = false;
             }
+
         }
         /// <summary>
         /// UI 처리

@@ -7,17 +7,31 @@ namespace CA.Game
 {
     public class Character : MonoBehaviour
     {
-        private NavAgent _navAgent;
+        private IMover _mover;
         [SerializeField] private Animator _anim;
         [SerializeField] private Controller _controller;
+        [SerializeField] private AttackInput _attackInput;
         private bool _isRun = false;
         private void Awake() {
-            _navAgent = GetComponent<NavAgent>();
+            _mover = GetComponent<IMover>();
 #if UNITY_EDITOR // Assertion
-            Assert.IsNotNull( _navAgent);
+            Assert.IsNotNull(_mover);
             Assert.IsNotNull( _anim);
             Assert.IsNotNull( _controller );
+            Assert.IsNotNull(_attackInput);
 #endif
+            // Attack Init
+            _attackInput.AddAttackAction(Attack);
+            _attackInput.AddSkillAction(AttackInput.SkillSlot.Slot0, Skill0);
+            _attackInput.AddSkillAction(AttackInput.SkillSlot.Slot1, Skill1);
+            _attackInput.AddSkillAction(AttackInput.SkillSlot.Slot2, Skill2);
+        }
+
+        public void OnDestroy() {
+            _attackInput.RemoveAttackAction(Attack);
+            _attackInput.RemoveSkillAction(AttackInput.SkillSlot.Slot0, Skill0);
+            _attackInput.RemoveSkillAction(AttackInput.SkillSlot.Slot1, Skill1);
+            _attackInput.RemoveSkillAction(AttackInput.SkillSlot.Slot2, Skill2);
         }
 
 
@@ -39,7 +53,7 @@ namespace CA.Game
         /// Animation 贸府
         /// </summary>
         private void WorkAnimation() {
-            if (_navAgent.HasReachedDesitnation()) {
+            if (_mover.HasReachedDesitnation()) {
                 if (_isRun) {
                     _isRun = false;
                     _anim.SetBool(AnimationKey.IsRun, false);
@@ -55,7 +69,22 @@ namespace CA.Game
         /// input 捞悼 贸府
         /// </summary>
         private void WorkMove(Vector3 inputDir) {
-            _navAgent.MoveDirection(inputDir);
+            _mover.MoveDirection(inputDir);
+        }
+
+        private void Attack() {
+
+        }
+
+        private void Skill0() {
+
+        }
+        private void Skill1() {
+
+        }
+
+        private void Skill2() {
+
         }
     }
 }
