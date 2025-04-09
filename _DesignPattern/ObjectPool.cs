@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using static UnityEditor.ObjectChangeEventStream;
+
 namespace CA.DesignPattern {
     public interface IObjectPool {
         void RepayItem(GameObject item, int index);
@@ -48,7 +48,7 @@ namespace CA.DesignPattern {
         internal GameObject ownerObj;
         internal GameObject itemObj;
         internal Queue<T> item_que;
-        internal List<T> index_T_list;
+        internal List<T> index_T_list; // Get Component를 줄이고 빠르게 반환하기위한 캐시데이터
         public bool isStatic;
         internal bool isDontDestroy;
 
@@ -95,6 +95,16 @@ namespace CA.DesignPattern {
             }
             item_que.Enqueue(index_T_list[index]);
         }
+        public void RepayItem(T item) {
+            if (!isStatic) {
+                item.gameObject.transform.SetParent(ownerObj.transform);
+                item.gameObject.SetActive(false);
+            }
+            item_que.Enqueue(item);
+        }
 
+        public IEnumerable<T> AllObjects() {
+            return index_T_list;
+        }
     }
 }

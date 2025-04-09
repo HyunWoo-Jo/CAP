@@ -11,17 +11,21 @@ namespace CA.Game
         private bool _isInit = false; // 초기화 여부
         public bool IsInit { get { return _isInit; } }
         public UserData userData;
-        
+
+        public SkillData attackData;
+        public SkillData[] skillDatas = new SkillData[3];
+
+
         protected override void Awake() {
             base.Awake();
         }
         private void Start() {
             InitGame();
         }
+        /// <summary>
+        /// 게임을 초기화 하는 함수
+        /// </summary>
         private async void InitGame() {
-
-
-
             /// User Data (Firebase) 읽어오기
             FirebaseManager firebaseManager = FirebaseManager.Instance;
 
@@ -30,6 +34,7 @@ namespace CA.Game
                 await UniTask.WaitForEndOfFrame();
             }
             
+            // Money Data를 읽어옴
             firebaseManager.ReadMoney(userData, (str ) => {
                 if (string.IsNullOrEmpty(str)) { // null 일경우 새로 작성
                     userData.Money = 0;

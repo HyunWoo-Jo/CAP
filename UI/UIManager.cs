@@ -76,14 +76,19 @@ namespace CA.UI
         }
 
         private View InstanceUI<View>(string key, bool isAtive, int order) {
-            GameObject prefab = DataManager.Instance.LoadAssetSync<GameObject>(key);
-            GameObject uiObj = Instantiate(prefab);
+            GameObject uiObj = GetUIObject<View>();
+            if (uiObj == null) {
+                GameObject prefab = DataManager.Instance.LoadAssetSync<GameObject>(key);
+                uiObj = Instantiate(prefab);
+
+                // 등록
+                AddUIDic(typeof(View).Name, uiObj);
+            }
             uiObj.transform.SetParent(_mainCanvas.transform);
             uiObj.transform.localPosition = Vector3.zero;
             uiObj.transform.localScale = Vector3.one;
             uiObj.gameObject.SetActive(isAtive);
-            // 등록
-            AddUIDic(typeof(View).Name, uiObj);
+           
             // anchor 변경
             RectTransform rt = uiObj.GetComponent<RectTransform>();
             rt.anchorMin = new Vector2(0, 0);

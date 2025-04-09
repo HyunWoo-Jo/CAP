@@ -11,6 +11,10 @@ namespace CA.Game
         [SerializeField] private Animator _anim;
         [SerializeField] private Controller _controller;
         [SerializeField] private AttackInput _attackInput;
+
+        private Skill _attack;
+        private Skill[] _skills = new Skill[3];
+
         private bool _isRun = false;
         private void Awake() {
             _mover = GetComponent<IMover>();
@@ -20,18 +24,43 @@ namespace CA.Game
             Assert.IsNotNull( _controller );
             Assert.IsNotNull(_attackInput);
 #endif
+            // Attack Skill 생성
+            SkillData attackData = GameManager.Instance.attackData;
+            SkillData[] skillDatas = GameManager.Instance.skillDatas;
+
+            _attack = SkillFectory.Create(attackData, this);
+           
+            for (int i = 0; i < skillDatas.Length; i++) {
+                if (skillDatas[i] == null) continue;
+                Skill skill = SkillFectory.Create(skillDatas[i], this);
+                _skills[i] = skill;
+            }
+
             // Attack Init
-            _attackInput.AddAttackAction(Attack);
-            _attackInput.AddSkillAction(AttackInput.SkillSlot.Slot0, Skill0);
-            _attackInput.AddSkillAction(AttackInput.SkillSlot.Slot1, Skill1);
-            _attackInput.AddSkillAction(AttackInput.SkillSlot.Slot2, Skill2);
+            _attackInput.AddAttackAction(AttackInput.PointerType.Down, () => { _attack?.DownAction(); });
+            _attackInput.AddAttackAction(AttackInput.PointerType.Up, () => { _attack?.UpAction(); });
+
+            for (int i = 0; i < skillDatas.Length; i++) {
+                int index = i;
+                if (skillDatas[index] != null) {
+                    _attackInput.AddSkillAction(AttackInput.SkillSlot.Slot0 + index, AttackInput.PointerType.Down, () => {
+                        _skills[index]?.DownAction();
+                    });
+                    _attackInput.AddSkillAction(AttackInput.SkillSlot.Slot0 + index, AttackInput.PointerType.Up, () => {
+                        _skills[index]?.UpAction();
+                    });
+                } else {
+                    _attackInput.OffSkillButtonUI(AttackInput.SkillSlot.Slot0 + index);
+                }
+            }
         }
 
         public void OnDestroy() {
-            _attackInput.RemoveAttackAction(Attack);
-            _attackInput.RemoveSkillAction(AttackInput.SkillSlot.Slot0, Skill0);
-            _attackInput.RemoveSkillAction(AttackInput.SkillSlot.Slot1, Skill1);
-            _attackInput.RemoveSkillAction(AttackInput.SkillSlot.Slot2, Skill2);
+            // 버튼 초기화
+            _attackInput.ClearAttackAction();
+            for(int i = 0; i < _skills.Length; i++) {
+                _attackInput.ClearSkillAction(AttackInput.SkillSlot.Slot0 + i);
+            }
         }
 
 
@@ -72,19 +101,5 @@ namespace CA.Game
             _mover.MoveDirection(inputDir);
         }
 
-        private void Attack() {
-
-        }
-
-        private void Skill0() {
-
-        }
-        private void Skill1() {
-
-        }
-
-        private void Skill2() {
-
-        }
     }
 }

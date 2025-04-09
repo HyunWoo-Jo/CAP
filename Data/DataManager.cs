@@ -41,13 +41,17 @@ namespace CA.Data
         /// </summary>
         /// <param name="key"></param>
         public void ReleaseAsset(string key) {
-            if(_dataCount_dic.TryGetValue(key, out int count)) {
-                _dataCount_dic[key]--;
-                if(--count <= 0 && _handle_dic.TryGetValue(key, out var handle)) {
-                    _data_dic.Remove(key);
+            if (_dataCount_dic.TryGetValue(key, out int count)) {
+                count--;
+                if (count <= 0) {
                     _dataCount_dic.Remove(key);
-                    _handle_dic.Remove(key);
-                    Addressables.Release(handle);
+                    if (_handle_dic.TryGetValue(key, out var handle)) {
+                        _data_dic.Remove(key);
+                        _handle_dic.Remove(key);
+                        Addressables.Release(handle);
+                    }
+                } else {
+                    _dataCount_dic[key] = count;
                 }
             }
         }

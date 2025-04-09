@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 using System;
+using CA.Utills;
 ////////////////////////////////////////////////////////////////////////////////////
 // Auto Generated Code
 #if UNITY_EDITOR
@@ -14,7 +15,7 @@ namespace CA.UI
 {
     public interface IAttackView_UI : IView_UI {
         // Your logic here
-        internal void ClickEffet(EventTrigger button);
+        internal void ClickUIEffet(EventTrigger button);
     }
 
     public class AttackView_UI : View_UI<AttackPresenter_UI,AttackModel_UI> ,IAttackView_UI
@@ -59,7 +60,7 @@ namespace CA.UI
         /// <param name="action"></param>
         /// <param name="className"></param>
         /// <param name="methodName"></param>
-        public void AddButtonAction(ButtonType type, Action action, string className, string methodName) {
+        public void AddButtonAction(ButtonType type, Action downAction, Action upAction, string className, string methodName) {
             EventTrigger button = null;
             switch (type) {
                 case ButtonType.Attack:
@@ -75,12 +76,26 @@ namespace CA.UI
                     button = _skillButtonList[2].Trigger;
                 break;
             }
-            _presenter.AddButtonFuntion(button, action, className, methodName);
+            _presenter.AddButtonFuntion(button, downAction, upAction, className, methodName);
+        }
+
+        public void ClearButton() {
+            for(int i =0;i< _skillButtonList.Count; i++) {
+                _skillButtonList[i].Trigger.Clear();
+            }
+        }
+
+        /// <summary>
+        /// 사용 안하는 Skill UI를 off 하는 함수
+        /// </summary>
+        /// <param name="index"></param>
+        public void OffSkillButtonUI(int index) {
+            _skillButtonList[index].gameObject.SetActive(false);
         }
         #endregion
 
         #region internal
-        void IAttackView_UI.ClickEffet(EventTrigger button) {
+        void IAttackView_UI.ClickUIEffet(EventTrigger button) {
             
         }
         #endregion

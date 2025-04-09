@@ -11,49 +11,68 @@ namespace CA.Game
             Slot1 = 1,
             Slot2 = 2,
         }
+        public enum PointerType {
+            Down,
+            Up,
+        }
 
         [SerializeField] private AttackView_UI _attackView;
-        private Action _attackAction;
-        private Action[] _skillAciton = new Action[3];
+        private Action _attackDownAction;
+        private Action _attackUpAction;
+        private Action[] _skillDownAcitons = new Action[3];
+        private Action[] _skillUpAcitons = new Action[3];
         
-        public void AddAttackAction(Action action) {
-            _attackAction += action;
+        public void AddAttackAction(PointerType pointerType, Action action) {
+            if (pointerType == PointerType.Down) {
+                _attackDownAction += action;
+            } else if (pointerType == PointerType.Up) {
+                _attackUpAction += action;
+            }
         }
-        public void RemoveAttackAction(Action action) {
-            _attackAction -= action;
+        public void ClearAttackAction() {
+            _attackDownAction = null;
+            _attackUpAction = null;
         }
-        public void AddSkillAction(SkillSlot skillIndex, Action action) {
-            _skillAciton[(int)skillIndex] += action;
+        public void AddSkillAction(SkillSlot skillIndex, PointerType pointerType, Action action) {
+            if (pointerType == PointerType.Down) {
+                _skillDownAcitons[(int)skillIndex] += action;
+            } else if (pointerType == PointerType.Up) {
+                _skillUpAcitons[(int)skillIndex] += action;
+            }
+            
         }
-        public void RemoveSkillAction(SkillSlot skillIndex, Action action) {
-            _skillAciton[(int)skillIndex] -= action;
+        public void ClearSkillAction(SkillSlot skillIndex) {
+            _skillDownAcitons[(int)skillIndex] = null;
+            _skillUpAcitons[(int)skillIndex] = null;
+        }
+        public void OffSkillButtonUI(SkillSlot slot) {
+            _attackView.OffSkillButtonUI((int)slot);
         }
 
         private void Awake() {
 #if UNITY_EDITOR
             Assert.IsNotNull(_attackView);
 #endif
-            // Init Button
-            _attackView.AddButtonAction(AttackView_UI.ButtonType.Attack, Attack, GetType().Name, nameof(Attack));
-            _attackView.AddButtonAction(AttackView_UI.ButtonType.Skill0, Skill0, GetType().Name, nameof(Skill0));
-            _attackView.AddButtonAction(AttackView_UI.ButtonType.Skill1, Skill1, GetType().Name, nameof(Skill1));
-            _attackView.AddButtonAction(AttackView_UI.ButtonType.Skill2, Skill2, GetType().Name, nameof(Skill2));
-        }
-        
-        private void Attack() {
-            _attackAction?.Invoke();
+            // Attack Button Init
+            _attackView.AddButtonAction(AttackView_UI.ButtonType.Attack, 
+                () => { _attackDownAction?.Invoke(); },
+                () => { _attackUpAction?.Invoke(); }, 
+                GetType().Name, "Attack");
+
+            // Skill Button Init
+            for(int i =0;i< _skillDownAcitons.Length; i++) {
+                int index = i;
+                _attackView.AddButtonAction(AttackView_UI.ButtonType.Skill0 + index,
+                    () => { _skillDownAcitons[index]?.Invoke(); },
+                    () => { _skillUpAcitons[index]?.Invoke(); },
+                     GetType().Name,
+                     "Awake"
+                    );
+            }
         }
 
-        private void Skill0() {
-            _skillAciton[0]?.Invoke();
-        }
-
-        private void Skill1() {
-            _skillAciton[1]?.Invoke();
-        }
-
-        private void Skill2() {
-            _skillAciton[2]?.Invoke();
+        private void OnDestroy() {
+            _attackView.ClearButton();
         }
 
        

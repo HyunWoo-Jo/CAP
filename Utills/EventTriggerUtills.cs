@@ -24,7 +24,9 @@ namespace CA.Utills
         public static void Clear(this EventTrigger eventTigger) {
             eventTigger.triggers.Clear();
 #if UNITY_EDITOR
-            eventTigger.GetComponent<EditorButtonEntryPointChker>().Dispose();
+            if (eventTigger == null) return;
+            var checker = eventTigger.GetComponent<EditorButtonEntryPointChker>();
+            checker?.Dispose();
 #endif
         }
     }

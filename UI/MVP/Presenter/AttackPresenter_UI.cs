@@ -18,16 +18,17 @@ namespace CA.UI {
         internal void InitButton(EventTrigger attackButton, List<SkillUI> skillButtonList) {
             // 기본 button feedback effect 할당
             attackButton.AddEventButton(EventTriggerType.PointerDown, () => {
-                _view.ClickEffet(attackButton);
+                _view.ClickUIEffet(attackButton);
             }, GetType().Name, nameof(InitButton));
             foreach (var skillButton in skillButtonList) {
                 skillButton.Trigger.AddEventButton(EventTriggerType.PointerDown, () => {
-                    _view.ClickEffet(skillButton.Trigger);
+                    _view.ClickUIEffet(skillButton.Trigger);
                 }, GetType().Name, nameof(InitButton));
             }
         }
-        internal void AddButtonFuntion(EventTrigger button, Action action, string className, string methodName) {
-            button.AddEventButton(EventTriggerType.PointerDown, action, className, methodName);
+        internal void AddButtonFuntion(EventTrigger button, Action downAction, Action upAction, string className, string methodName) {
+            button.AddEventButton(EventTriggerType.PointerDown, downAction, className, methodName);
+            button.AddEventButton(EventTriggerType.PointerUp, upAction, className, methodName);
         }
         #endregion
     }
